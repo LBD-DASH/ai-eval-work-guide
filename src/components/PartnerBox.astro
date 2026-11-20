@@ -1,0 +1,20 @@
+---
+import { getPartner, PARTNER_REL } from '../lib/partners';
+import { withBase } from '../lib/url';
+interface Props { keys: string[] }
+const { keys } = Astro.props;
+const list = keys.map(getPartner);
+const anyAffiliate = list.some((p) => p.affiliate);
+---
+{list.length > 0 && (
+  <aside class="partners" aria-label="Official site">
+    {list.map((p) => (
+      <a class="btn" href={p.url} rel={PARTNER_REL} target="_blank">Go to the official {p.name} site</a>
+    ))}
+    <p class="muted small">
+      {anyAffiliate
+        ? <>This is a referral link. <a href={withBase('affiliate-disclosure/')}>How we make money</a>.</>
+        : <>Plain link. We have no referral or affiliate relationship with this platform today. <a href={withBase('affiliate-disclosure/')}>Disclosure</a>.</>}
+    </p>
+  </aside>
+)}

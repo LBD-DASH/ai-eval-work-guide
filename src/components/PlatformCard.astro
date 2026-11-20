@@ -1,0 +1,13 @@
+---
+import { withBase } from '../lib/url';
+interface Props { entry: any }
+const { entry } = Astro.props;
+const d = entry.data;
+---
+<article class="card">
+  <h3><a href={withBase(`platforms/${entry.id}/`)}>{d.name}</a></h3>
+  <span class="op">{d.operator}</span>
+  <p class="small">{d.bestFor}</p>
+  <p class="pay">{d.pay ? <>Published pay info: yes (<a href={d.pay.sourceUrl} rel="noopener" target="_blank">source</a>)</> : <>No pay figure published</>}</p>
+  <a class="more" href={withBase(`platforms/${entry.id}/`)}>Requirements and details →</a>
+</article>
