@@ -1,0 +1,10 @@
+{
+  "_note": "Single source of truth for every outbound platform link that could ever become a referral or affiliate link. `url` is the plain official site (the fallback, always kept). When a program approves us, paste the tracked link the platform issues into `affiliateUrl` (that is the ONLY field to change); the site then uses it automatically, marks the link as a referral link, and the disclosure page updates. Leave `affiliateUrl` empty until approved. Never invent referral or tracking IDs. All partner links render with rel=\"sponsored nofollow noopener\".",
+  "dataannotation": { "name": "DataAnnotation", "kind": "platform", "blurb": "Official DataAnnotation site.", "url": "https://www.dataannotation.tech/", "affiliateUrl": "" },
+  "outlier": { "name": "Outlier", "kind": "platform", "blurb": "Official Outlier site (operated by Scale AI).", "url": "https://outlier.ai/", "affiliateUrl": "" },
+  "prolific": { "name": "Prolific", "kind": "platform", "blurb": "Official Prolific participant page.", "url": "https://www.prolific.com/participants", "affiliateUrl": "" },
+  "alignerr": { "name": "Alignerr", "kind": "platform", "blurb": "Official Alignerr site (powered by Labelbox).", "url": "https://www.alignerr.com/", "affiliateUrl": "" },
+  "mercor": { "name": "Mercor", "kind": "platform", "blurb": "Official Mercor experts page.", "url": "https://www.mercor.com/experts", "affiliateUrl": "" },
+  "appen-experts": { "name": "Appen Experts", "kind": "platform", "blurb": "Official Appen Experts contributor site.", "url": "https://appenexperts.com/", "affiliateUrl": "" },
+  "telus-digital-ai-community": { "name": "TELUS Digital AI Community", "kind": "platform", "blurb": "Official TELUS Digital AI Community jobs page.", "url": "https://www.telusdigital.com/careers/ai-community", "affiliateUrl": "" }
+}
