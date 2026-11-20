@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { withBase } from '../lib/url';
+---
+<Base title="Page not found" description="This page doesn't exist. Browse verified AI training and evaluation platforms or read the beginner's guide to getting started." path="404/">
+  <PageHead title="Page not found" eyebrow="404" />
+  <div class="wrap read"><div class="prose"><p>Try the <a href={withBase('platforms/')}>platform list</a> or the <a href={withBase('get-started/')}>getting started guide</a>.</p></div></div>
+</Base>

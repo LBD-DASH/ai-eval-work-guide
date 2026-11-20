@@ -1,0 +1,78 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '../styles/global.css';
+import { withBase, absUrl, SITE_NAME } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string; // site-relative, e.g. "platforms/outlier/"
+  jsonLd?: object[];
+  ogType?: string;
+}
+const { title, description, path, jsonLd = [], ogType = 'website' } = Astro.props;
+const canonical = absUrl(path, Astro.site);
+const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#123b5c" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="sitemap" href={withBase('sitemap.xml')} />
+    {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={withBase('')} aria-label={`${SITE_NAME} home`}>
+          <img src={withBase('favicon.svg')} width="28" height="28" alt="" /><span>AI Eval <b>Work Guide</b></span>
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href={withBase('platforms/')}>Platforms</a>
+          <a href={withBase('get-started/')}>Get started</a>
+          <a href={withBase('faq/')}>FAQ</a>
+          <a class="hide-sm" href={withBase('about/')}>About</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div>
+          <a class="brand" href={withBase('')}><img src={withBase('favicon.svg')} width="24" height="24" alt="" /><span>AI Eval <b>Work Guide</b></span></a>
+          <p>
+            A plain-English guide to paid AI training and evaluation work. Every requirement and pay figure links to its source with the
+            date we checked it. Platforms change their terms often, so the official page always wins. We do not promise work or earnings.
+          </p>
+        </div>
+        <ul class="foot-links">
+          <li><a href={withBase('platforms/')}>All platforms</a></li>
+          <li><a href={withBase('get-started/')}>How to get started</a></li>
+          <li><a href={withBase('faq/')}>FAQ</a></li>
+          <li><a href={withBase('about/')}>About and sourcing</a></li>
+          <li><a href={withBase('affiliate-disclosure/')}>Affiliate disclosure</a></li>
+          <li><a href={withBase('privacy/')}>Privacy</a></li>
+          <li><a href={withBase('sitemap.xml')}>Sitemap</a></li>
+        </ul>
+        <p class="foot-base">© {new Date().getFullYear()} AI Eval Work Guide. Independent. Not affiliated with any platform listed.</p>
+      </div>
+    </footer>
+  </body>
+</html>
