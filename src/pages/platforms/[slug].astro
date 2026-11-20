@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PartnerBox from '../../components/PartnerBox.astro';
+import { absUrl, withBase, SITE_NAME } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const platforms = await getCollection('platforms');
+  return platforms.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const path = `platforms/${entry.id}/`;
+const url = absUrl(path, Astro.site);
+const iso = d.lastUpdated.toISOString().slice(0, 10);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.description,
+    dateModified: iso,
+    datePublished: iso,
+    mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: SITE_NAME },
+    publisher: { '@type': 'Organization', name: SITE_NAME },
+    about: { '@type': 'Organization', name: d.name, url: d.officialUrl },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Platforms', item: absUrl('platforms/', Astro.site) },
+      { '@type': 'ListItem', position: 2, name: d.name, item: url },
+    ],
+  },
+];
+---
+<Base title={d.title} description={d.description} path={path} jsonLd={jsonLd} ogType="article">
+  <header class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href={withBase('')}>Home</a> › <a href={withBase('platforms/')}>Platforms</a> › {d.name}</nav>
+      <h1>{d.name}: what the work is, who can apply, and pay</h1>
+      <ul class="meta">
+        <li>Run by: {d.operator}</li>
+        <li>Last checked {d.lastChecked} against official sources</li>
+      </ul>
+      <p class="lede">{d.summary}</p>
+    </div>
+  </header>
+  <div class="wrap read">
+    <div class="facts">
+      <div class="card"><h2>Type of work</h2><ul>{d.workTypes.map((w) => <li>{w}</li>)}</ul></div>
+      <div class="card"><h2>Stated requirements</h2><ul>{d.requirements.map((r) => <li>{r}</li>)}</ul></div>
+      <div class="card">
+        <h2>Pay</h2>
+        {d.pay
+          ? <p>{d.pay.text} <span class="small">(<a href={d.pay.sourceUrl} rel="noopener" target="_blank">source</a>, last checked {d.lastChecked})</span></p>
+          : <p><strong>No pay figure published</strong> on the official pages we checked, so we show none.</p>}
+        <p class="small muted">{d.payNote}</p>
+      </div>
+    </div>
+    <p class="callout"><strong>Best for:</strong> {d.bestFor} No platform guarantees work or earnings. Legit platforms do not charge you to join; see <a href={withBase('get-started/#scams-and-fees')}>scams and fees</a>.</p>
+
+    <div class="prose"><Content /></div>
+
+    <PartnerBox keys={d.partners} />
+
+    <section class="prose" aria-labelledby="faq-h">
+      <h2 id="faq-h">FAQ</h2>
+      {d.faq.map((f) => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <section class="prose sources" aria-labelledby="src-h">
+      <h2 id="src-h">Sources (last checked {d.lastChecked})</h2>
+      <ul class="small">{d.sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
+      <p class="muted small">Platforms change requirements and rates often. If anything here differs from the official page, the official page wins.</p>
+    </section>
+  </div>
+</Base>

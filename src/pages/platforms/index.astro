@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import { withBase, absUrl, LAST_CHECKED } from '../../lib/url';
+const platforms = (await getCollection('platforms')).sort((a, b) => a.data.order - b.data.order);
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'ItemList',
+  itemListElement: platforms.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.data.name, url: absUrl(`platforms/${p.id}/`, Astro.site) })),
+}];
+---
+<Base title="AI Training and Evaluation Platforms Compared (Nov 2026)" description="Seven AI training and evaluation work platforms compared: type of work, stated requirements and published pay, each linked to official sources." path="platforms/" jsonLd={jsonLd}>
+  <PageHead eyebrow="Platforms" title="AI training and evaluation platforms" lede={`Every platform below was checked against its own official pages on ${LAST_CHECKED}. Pay is shown only where the platform publishes it.`} />
+  <div class="wrap read">
+    <div class="prose">
+      <table>
+        <thead><tr><th>Platform</th><th>Type of work</th><th>Pay published?</th></tr></thead>
+        <tbody>
+          {platforms.map((p) => (
+            <tr>
+              <td><a href={withBase(`platforms/${p.id}/`)}>{p.data.name}</a><br /><span class="small muted">{p.data.operator}</span></td>
+              <td class="small">{p.data.workTypes.slice(0, 2).join('; ')}</td>
+              <td class="small">{p.data.pay ? <>{p.data.pay.text} <a href={p.data.pay.sourceUrl} rel="noopener" target="_blank">Source</a>.</> : 'No figure published. See page for how pay works.'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="small muted">All figures last checked {LAST_CHECKED}. Ranges are what each platform publishes, not what you will earn. No platform guarantees work.</p>
+      <h2>Not listed yet</h2>
+      <p>We only add a platform once we can verify it from its own official pages. Remotasks is not listed because we could not load and verify its official site on {LAST_CHECKED}. Outlier is the Scale AI platform we could verify.</p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PlatformCard from '../components/PlatformCard.astro';
+import { withBase, absUrl, SITE_NAME, LAST_CHECKED } from '../lib/url';
+const platforms = (await getCollection('platforms')).sort((a, b) => a.data.order - b.data.order);
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: absUrl('', Astro.site) }];
+---
+<Base title="AI Eval Work Guide: Paid AI Training and Evaluation Work, Explained" description="A sourced beginner's guide to paid AI training and evaluation work: which platforms exist, what they ask for, and what pay they actually publish." path="" jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Beginner's guide · checked {LAST_CHECKED}</span>
+      <h1>Get started with paid AI training and evaluation work</h1>
+      <p class="lede">
+        Companies pay people to rate AI answers, write example prompts and label data. This guide explains what that work is,
+        which platforms offer it, what each one asks for, and the pay they publish themselves, with a source link on every figure.
+      </p>
+      <a class="btn" href={withBase('platforms/')}>Compare platforms</a>
+      <a class="btn ghost" href={withBase('get-started/')}>How to get started</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Platforms we have verified</h2>
+      <p class="muted">Each page covers the type of work, stated requirements (location, language, skills, tests) and pay only where the platform publishes it.</p>
+      <div class="grid">{platforms.map((p) => <PlatformCard entry={p} />)}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>What this work actually is</h2>
+      <ul>
+        <li><strong>Rating AI answers:</strong> reading two or more chatbot responses and judging which is more accurate, helpful or safe, against written guidelines.</li>
+        <li><strong>Writing examples:</strong> creating prompts and model answers that AI systems learn from.</li>
+        <li><strong>Data labelling:</strong> tagging text, images, audio or map data so it can be used to train or test AI.</li>
+      </ul>
+      <div class="callout">
+        <strong>Read this first.</strong> This is contract or task-based work. Platforms say work depends on available projects and your
+        quality, and none of them guarantee hours or income. Legitimate platforms do not charge you to join.
+        <a href={withBase('get-started/#scams-and-fees')}>How to spot fees and scams</a>.
+      </div>
+      <h2>How we check</h2>
+      <p>Every requirement and figure on this site comes from the platform's own pages or a reputable source, with the date we last checked it. If we cannot verify something, we leave it out. <a href={withBase('about/')}>More on our sourcing</a>.</p>
+    </div>
+  </section>
+</Base>
