@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { allPartners } from '../lib/partners';
+const list = allPartners();
+const anyAffiliate = list.some((p) => p.affiliate);
+---
+<Base title="Affiliate and referral disclosure" description="How AI Eval Work Guide may make money: which outbound links are referral or affiliate links (currently none), and how that never changes what we publish." path="affiliate-disclosure/">
+  <PageHead title="Affiliate and referral disclosure" eyebrow="Transparency" />
+  <div class="wrap read"><div class="prose">
+    <p>AI Eval Work Guide may in future earn money through referral or affiliate programs: if you sign up through a marked link, the platform may pay us, at no cost to you.</p>
+    <p><strong>Current status:</strong> {anyAffiliate ? 'some platform links below are referral or affiliate links.' : 'none of our links are referral or affiliate links. Every platform link points to the plain official website.'}</p>
+    <ul>
+      {list.map((p) => <li>{p.name}: {p.affiliate ? 'referral/affiliate link' : 'plain link, no referral or affiliate relationship'}</li>)}
+    </ul>
+    <p>Any referral relationship will be marked on the page where the link appears. It will never change the requirements or pay figures we publish, which always come from official sources, and we will keep listing platforms that pay us nothing.</p>
+  </div></div>
+</Base>

@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { withBase, LAST_CHECKED } from '../lib/url';
+const path = 'get-started/';
+---
+<Base title="How to Get Started in AI Training and Evaluation Work" description="A step-by-step beginner's guide to applying for AI rating, prompt writing and data labelling work, plus how to spot fees and job scams." path={path}>
+  <PageHead eyebrow="Beginner's guide" title="How to get started with AI training and evaluation work" lede="A practical, step-by-step route from zero to your first application, based on what the platforms themselves ask for." />
+  <div class="wrap read"><div class="prose">
+    <h2>1. Check what you can offer</h2>
+    <p>Platforms sort applicants by skill. The common entry points on the platforms we checked are:</p>
+    <ul>
+      <li><strong>Strong written English and careful reasoning.</strong> DataAnnotation's general track asks for strong writing and critical thinking, plus a bachelor's degree or equivalent experience (<a href="https://www.dataannotation.tech/faq" rel="noopener" target="_blank">FAQ</a>). Alignerr says clear written English is a must (<a href="https://www.alignerr.com/" rel="noopener" target="_blank">Alignerr</a>).</li>
+      <li><strong>A second language.</strong> Multilingual tracks and local rater roles often want native or professional fluency, and some (such as the TELUS Digital listing we checked) also ask for years of local residency.</li>
+      <li><strong>A specialism.</strong> Coding, STEM, law, finance and medicine have their own tracks on several platforms.</li>
+      <li><strong>Just being an adult in a supported country.</strong> Prolific's studies, including AI evaluation tasks, are open to verified adults in its supported countries, with no degree requirement listed (<a href="https://participant-help.prolific.com/en/articles/445007-who-can-participate-in-studies-on-prolific" rel="noopener" target="_blank">Prolific help</a>).</li>
+    </ul>
+
+    <h2>2. Get your documents ready</h2>
+    <ul>
+      <li>A valid government-issued ID from your country of residence. DataAnnotation, Outlier, Alignerr, Prolific and TELUS Digital all describe identity verification.</li>
+      <li>A current resume. Outlier also asks for a LinkedIn profile (<a href="https://outlier.ai/faq" rel="noopener" target="_blank">Outlier FAQ</a>).</li>
+      <li>A payout account the platform supports. PayPal is used by DataAnnotation, Outlier, Prolific and Alignerr; others list bank transfer, Airtm, Payoneer or Stripe.</li>
+      <li>A stable internet connection, a computer, and no VPN. DataAnnotation and Prolific both say a VPN can cause verification problems or holds.</li>
+    </ul>
+
+    <h2>3. Take assessments seriously</h2>
+    <p>Most platforms screen with a test. DataAnnotation's Starter Assessment can only be taken once and is judged on thoroughness, not speed. Outlier and TELUS Digital use skill screenings and qualification exams. Read every instruction, take your time, and answer in full sentences.</p>
+
+    <h2>4. Apply to two or three platforms, not ten</h2>
+    <p>Start with the ones whose stated requirements you clearly meet. Our <a href={withBase('platforms/')}>platform comparison</a> lists each one's requirements and published pay. Expect waiting: Prolific uses a waitlist, and DataAnnotation says it cannot reply to every applicant.</p>
+
+    <h2>5. Treat it as contract work</h2>
+    <p>On these platforms you are generally an independent contractor (Outlier says so explicitly). Work depends on available projects and your quality scores, and none of the platforms we checked guarantees hours. You are usually responsible for your own taxes; check your local rules.</p>
+
+    <h2 id="scams-and-fees">Scams and fees: never pay to get work</h2>
+    <div class="callout">
+      <p><strong>Legitimate platforms do not charge you to join.</strong></p>
+      <ul>
+        <li>The US Federal Trade Commission says: "Honest employers, including the federal government, will never ask you to pay to get a job. Anyone who does is a scammer." (<a href="https://consumer.ftc.gov/articles/job-scams" rel="noopener" target="_blank">FTC: Job Scams</a>, checked {LAST_CHECKED})</li>
+        <li>The FTC also warns that work-from-home scams make you pay for starter kits, so-called training or certifications, and that a "job" which asks you to deposit a check and send money back is a fake check scam.</li>
+        <li>Appen Experts states: "We will never ask you to pay anything to join our projects." (<a href="https://appenexperts.com/" rel="noopener" target="_blank">Appen Experts FAQ</a>)</li>
+        <li>DataAnnotation's FAQ says the platform charges no signup fees (<a href="https://www.dataannotation.tech/faq" rel="noopener" target="_blank">DataAnnotation FAQ</a>).</li>
+      </ul>
+    </div>
+    <p>Practical checks, following the FTC's advice:</p>
+    <ul>
+      <li>Apply only through the platform's official website. Type the address yourself rather than clicking a link in an unexpected message.</li>
+      <li>Search the company name with "scam", "review" or "complaint" before sharing documents.</li>
+      <li>Never pay for a "course", "certificate", "account" or "guaranteed placement" to get access to a platform.</li>
+      <li>Be wary of anyone promising a lot of money for little work. The FTC calls that "almost certainly a scam".</li>
+    </ul>
+    <p class="small muted">Sources last checked {LAST_CHECKED}. If you think you have been scammed in the US, the FTC accepts reports at ReportFraud.ftc.gov; elsewhere, contact your national consumer or fraud authority.</p>
+  </div></div>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import faq from '../data/faq.json';
+import { withBase, LAST_CHECKED } from '../lib/url';
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+}];
+---
+<Base title="AI Training Work FAQ: Pay, Requirements, Fees and Scams" description="Straight answers on AI training and evaluation work: degrees, pay ranges platforms publish, joining fees, countries, payment methods and contractor status." path="faq/" jsonLd={jsonLd}>
+  <PageHead eyebrow="FAQ" title="Frequently asked questions" lede={`Answers are based on the platforms' own pages and the FTC, last checked ${LAST_CHECKED}. Sources are linked on each platform page.`} />
+  <div class="wrap read"><div class="prose">
+    {faq.map((f) => (<details open><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    <p class="small muted">See the <a href={withBase('platforms/')}>platform pages</a> for sources, and the <a href={withBase('get-started/#scams-and-fees')}>scams and fees section</a> for the FTC guidance.</p>
+  </div></div>
+</Base>
